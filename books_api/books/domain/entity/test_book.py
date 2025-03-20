@@ -97,6 +97,52 @@ def test_removeAuthors_shouldNotRemoveUnexistingAuthor():
     assert len(book.authors) == len(authors), "Authors should not be removed"
 
 
+@pytest.mark.parametrize(
+    "publisher", [["Publisher name", "Another publisher name"]]
+)
+def test_addPublishers(publisher: str):
+    book = Book("123", "Title", "Description")
+    for name in publisher:
+        book.addPublisher(name)
+        assert name in book.publishers, f"Publisher '{name}' should be added"
+
+
+@pytest.mark.parametrize(
+    "publisher", [["Publisher name", "Another publisher name"]]
+)
+def test_removePublishers(publisher: str):
+    book = Book("123", "Title", "Description")
+    for name in publisher:
+        book.addPublisher(name)
+        assert name in book.publishers, f"Publisher '{name}' should be added"
+
+    for name in publisher:
+        book.removePublisher(name)
+        assert (
+            name not in book.publishers
+        ), f"Publisher '{name}' should be removed"
+
+
+def test_removePublishers_shouldNotRemoveUnexistingPublisher():
+    publishers = [
+        "Publisher name",
+        "Another publisher name",
+        "One more publisher name",
+        "Last publisher name",
+    ]
+
+    book = Book("123", "Title", "Description")
+
+    for name in publishers:
+        book.addPublisher(name)
+        assert name in book.publishers, f"Publisher '{name}' should be added"
+
+    book.removePublisher("Unexisting publisher")
+    assert len(book.publishers) == len(
+        publishers
+    ), "Publishers should not be removed"
+
+
 def test_numberOfPages():
     book = Book("123", "Title")
     numberOfPages = 100
@@ -132,6 +178,21 @@ def test_bookISBN13():
     isbn13 = "0987654321098"
     book.changeISBN13(isbn13)
     assert book.isbn13 == isbn13, f"ISBN13 should be updated to '{isbn13}'"
+
+
+def test_publishDate():
+    book = Book("123", "Title")
+    publishDate = "2021-10-01"
+    book.changePublishDate(publishDate)
+    assert (
+        book.publishDate == publishDate
+    ), f"Publish date should be updated to '{publishDate}'"
+
+    publishDate = "2021-10-02"
+    book.changePublishDate(publishDate)
+    assert (
+        book.publishDate == publishDate
+    ), f"Publish date should be updated to '{publishDate}'"
 
 
 @pytest.mark.parametrize(

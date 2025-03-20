@@ -7,6 +7,7 @@ class Book:
         self.__subtitle = subtitle
         self.__description = description
         self.__authors = []
+        self.__publishers = []
 
         self.__validate()
 
@@ -31,12 +32,20 @@ class Book:
         return self.__authors
 
     @property
+    def publishers(self) -> list[str]:
+        return self.__publishers
+
+    @property
     def isbn10(self) -> str:
         return self.__isbn10
 
     @property
     def isbn13(self) -> str:
         return self.__isbn13
+
+    @property
+    def publishDate(self) -> str:
+        return self.__publishDate
 
     @property
     def numberOfPages(self) -> int:
@@ -66,6 +75,13 @@ class Book:
         if authorName in self.__authors:
             self.__authors.remove(authorName)
 
+    def addPublisher(self, publisherName: str) -> None:
+        self.__publishers.append(publisherName)
+
+    def removePublisher(self, publisherName: str) -> None:
+        if publisherName in self.__publishers:
+            self.__publishers.remove(publisherName)
+
     def changeISBN10(self, isbn10: str) -> None:
         self.__isbn10 = isbn10
 
@@ -74,3 +90,6 @@ class Book:
 
     def changeNumberOfPages(self, numberOfPages: int) -> None:
         self.__numberOfPages = numberOfPages
+
+    def changePublishDate(self, publishDate: str) -> None:
+        self.__publishDate = publishDate

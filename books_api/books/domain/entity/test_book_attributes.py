@@ -56,6 +56,13 @@ def test_numberOfPages():
     ), f"Number of pages should be updated to '{numberOfPages}'"
 
 
+@pytest.mark.parametrize("numberOfPages", [-2, 0, -123])
+def test_numberOfPages_shouldFailWithInvalidValue(numberOfPages: int):
+    book = Book("123", "Title")
+    with pytest.raises(ValueError):
+        book.changeNumberOfPages(numberOfPages)
+
+
 def test_bookISBN10():
     book = Book("123", "Title")
     isbn10 = ISBN10("1234567890")

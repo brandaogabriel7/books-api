@@ -93,6 +93,8 @@ class Book:
         self.__isbn13 = isbn13
 
     def changeNumberOfPages(self, numberOfPages: int) -> None:
+        if not numberOfPages or numberOfPages < 0:
+            raise ValueError("Number of pages should be a positive number")
         self.__numberOfPages = numberOfPages
 
     def changePublishDate(self, publishDate: str) -> None:

@@ -1,7 +1,5 @@
 import pytest
 
-from ..value_object.author import Author
-
 from .book import Book
 
 
@@ -20,7 +18,7 @@ def test_createBook_shouldFailWithoutTitle(title: str):
 
 
 @pytest.mark.parametrize("title", ["New title", "Another title"])
-def test_changeBookTitle(title: str):
+def test_changeBookTitle_success(title: str):
     book = Book("123", "Old title")
     book.changeTitle(title)
     assert book.title == title, "Title should be updated"
@@ -34,39 +32,31 @@ def test_changeBookTitle_shouldFailWithoutTitle(title: str):
     assert str(e.value) == "Book title is required", "Should fail without title"
 
 
-def test_createBook_success():
-    book = Book("123", "Title")
-    assert book.id == "123", "Id should be '123'"
-    assert book.title == "Title", "Title should be 'Title'"
+@pytest.mark.parametrize("subtitle", ["new subtitle", "other subtitle"])
+def test_bookSubtitle(subtitle: str):
+    book = Book("123", "Title", "old subtitle")
+    book.changeSubtitle(subtitle)
+    assert (
+        book.subtitle == subtitle
+    ), f"Subtitle should be updated to '{subtitle}'"
 
 
 @pytest.mark.parametrize(
-    "description",
-    ["this is a book description", "this is another book description"],
+    "description", ["new description", "other description"]
 )
-def test_createBook_sucessWithDescription(description: str):
-    book = Book("123", "Title", description)
-    assert book.id == "123", "Id should be '123'"
-    assert book.title == "Title", "Title should be 'Title'"
+def test_bookDescription(description: str):
+    book = Book("123", "Title", "Subtitle", "old description")
+    book.changeDescription(description)
     assert (
         book.description == description
-    ), "Description should be 'description'"
-
-
-@pytest.mark.parametrize(
-    "description,", ["new description", "other description"]
-)
-def test_changeBookDescription(description: str):
-    book = Book("123", "Title", "old description")
-    book.changeDescription(description)
-    assert book.description == description, "Description should be updated"
+    ), f"Description should be updated to '{description}'"
 
 
 @pytest.mark.parametrize("authorName", [["Author name", "Another author name"]])
 def test_addBookAuthors(authorName: str):
     book = Book("123", "Title", "Description")
     for name in authorName:
-        book.addAuthor(Author(name))
+        book.addAuthor(name)
         assert name in book.authors, f"Author '{name}' should be added"
 
 
@@ -81,7 +71,7 @@ def test_removeAuthors():
     book = Book("123", "Title", "Description")
 
     for name in authors:
-        book.addAuthor(Author(name))
+        book.addAuthor(name)
         assert name in book.authors, f"Author '{name}' should be added"
 
     for name in authors:
@@ -100,27 +90,72 @@ def test_removeAuthors_shouldNotRemoveUnexistingAuthor():
     book = Book("123", "Title", "Description")
 
     for name in authors:
-        book.addAuthor(Author(name))
+        book.addAuthor(name)
         assert name in book.authors, f"Author '{name}' should be added"
 
     book.removeAuthor("Unexisting author")
     assert len(book.authors) == len(authors), "Authors should not be removed"
 
 
-@pytest.mark.parametrize("isbn", [None, "", "   "])
-def test_changeBookISBN_shouldFailWithoutISBN(isbn: str):
+def test_numberOfPages():
     book = Book("123", "Title")
-    with pytest.raises(ValueError) as e:
-        book.changeISBN(isbn)
-    assert str(e.value) == "Book ISBN is required", "Should fail without ISBN"
+    numberOfPages = 100
+    book.changeNumberOfPages(numberOfPages)
+    assert (
+        book.numberOfPages == numberOfPages
+    ), f"Number of pages should be updated to '{numberOfPages}'"
+
+    numberOfPages = 200
+    book.changeNumberOfPages(numberOfPages)
+    assert (
+        book.numberOfPages == numberOfPages
+    ), f"Number of pages should be updated to '{numberOfPages}'"
 
 
-def test_changeBookISBN():
+def test_bookISBN10():
     book = Book("123", "Title")
-    isbn = "1234567890"
-    book.changeISBN(isbn)
-    assert book.isbn == isbn, "ISBN should be updated"
+    isbn10 = "1234567890"
+    book.changeISBN10(isbn10)
+    assert book.isbn10 == isbn10, f"ISBN10 should be updated to '{isbn10}'"
 
-    isbn = "0987654321"
-    book.changeISBN(isbn)
-    assert book.isbn == isbn, "ISBN should be updated"
+    isbn10 = "0987654321"
+    book.changeISBN10(isbn10)
+    assert book.isbn10 == isbn10, f"ISBN10 should be updated to '{isbn10}'"
+
+
+def test_bookISBN13():
+    book = Book("123", "Title")
+    isbn13 = "1234567890123"
+    book.changeISBN13(isbn13)
+    assert book.isbn13 == isbn13, f"ISBN13 should be updated to '{isbn13}'"
+
+    isbn13 = "0987654321098"
+    book.changeISBN13(isbn13)
+    assert book.isbn13 == isbn13, f"ISBN13 should be updated to '{isbn13}'"
+
+
+@pytest.mark.parametrize(
+    "id,title,subtitle,description",
+    [
+        ["book-id-1", "Title", "Subtitle", "Some book description"],
+        [
+            "book-id-2",
+            "Another title",
+            "Another subtitle",
+            "Another description",
+        ],
+        ["book-id-3", "One more title", None, "One more description"],
+        ["book-id-4", "Last title", "Last subtitle", None],
+        ["book-id-5", "Title", None, None],
+    ],
+)
+def test_createBook_success(
+    id: str, title: str, subtitle: str, description: str
+):
+    book = Book(id, title, subtitle, description)
+    assert book.id == id, f"Id should be '{id}'"
+    assert book.title == title, f"Title should be '{title}'"
+    assert book.subtitle == subtitle, f"Subtitle should be '{subtitle}'"
+    assert (
+        book.description == description
+    ), f"Description should be '{description}'"

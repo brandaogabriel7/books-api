@@ -6,6 +6,8 @@ services:
     build:
       context: books_api
       dockerfile: Dockerfile.development
+    environment:
+      - DEBUG=True
     entrypoint: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./books_api:/app

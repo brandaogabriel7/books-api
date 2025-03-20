@@ -25,7 +25,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Stage 2: Production stage
 FROM python:3.12.8-slim
 
-
 # Install Dockerize
 ENV DOCKERIZE_VERSION v0.6.1
 RUN apt-get update && apt-get install -y wget

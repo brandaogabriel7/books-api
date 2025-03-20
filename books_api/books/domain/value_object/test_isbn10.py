@@ -1,6 +1,6 @@
 import pytest
 
-from .isbn10 import ISBN10
+from books.domain.value_object.isbn10 import ISBN10
 
 
 @pytest.mark.parametrize(

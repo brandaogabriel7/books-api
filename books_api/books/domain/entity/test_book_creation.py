@@ -1,9 +1,9 @@
 import pytest
 
-from .book import Book
-
-from ..value_object.isbn10 import ISBN10
-from ..value_object.isbn13 import ISBN13
+from books.domain.entity.book import Book
+from books.domain.value_object.isbn10 import ISBN10
+from books.domain.value_object.isbn13 import ISBN13
+from books.domain.value_object.publish_date import PublishDate
 
 
 @pytest.mark.parametrize("id", [None, "", "   "])

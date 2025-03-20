@@ -1,6 +1,6 @@
 import pytest
 
-from .book import Book
+from books.domain.entity.book import Book
 
 
 @pytest.mark.parametrize("authorName", [["Author name", "Another author name"]])

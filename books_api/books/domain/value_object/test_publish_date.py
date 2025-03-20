@@ -1,6 +1,6 @@
 import pytest
 
-from .publish_date import PublishDate
+from books.domain.value_object.publish_date import PublishDate
 
 
 @pytest.mark.parametrize("value", ["2021-01-01", "2023-11-30"])

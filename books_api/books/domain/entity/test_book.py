@@ -2,6 +2,9 @@ import pytest
 
 from .book import Book
 
+from ..value_object.isbn10 import ISBN10
+from ..value_object.isbn13 import ISBN13
+
 
 @pytest.mark.parametrize("id", [None, "", "   "])
 def test_createBook_shouldFailWithoutId(id: str):
@@ -160,22 +163,22 @@ def test_numberOfPages():
 
 def test_bookISBN10():
     book = Book("123", "Title")
-    isbn10 = "1234567890"
+    isbn10 = ISBN10("1234567890")
     book.changeISBN10(isbn10)
     assert book.isbn10 == isbn10, f"ISBN10 should be updated to '{isbn10}'"
 
-    isbn10 = "0987654321"
+    isbn10 = ISBN10("0987654321")
     book.changeISBN10(isbn10)
     assert book.isbn10 == isbn10, f"ISBN10 should be updated to '{isbn10}'"
 
 
 def test_bookISBN13():
     book = Book("123", "Title")
-    isbn13 = "1234567890123"
+    isbn13 = ISBN13("1234567890123")
     book.changeISBN13(isbn13)
     assert book.isbn13 == isbn13, f"ISBN13 should be updated to '{isbn13}'"
 
-    isbn13 = "0987654321098"
+    isbn13 = ISBN13("0987654321098")
     book.changeISBN13(isbn13)
     assert book.isbn13 == isbn13, f"ISBN13 should be updated to '{isbn13}'"
 

@@ -1,3 +1,7 @@
+from ..value_object.isbn10 import ISBN10
+from ..value_object.isbn13 import ISBN13
+
+
 class Book:
     def __init__(
         self, id: str, title: str, subtitle: str = None, description: str = None
@@ -36,11 +40,11 @@ class Book:
         return self.__publishers
 
     @property
-    def isbn10(self) -> str:
+    def isbn10(self) -> ISBN10:
         return self.__isbn10
 
     @property
-    def isbn13(self) -> str:
+    def isbn13(self) -> ISBN13:
         return self.__isbn13
 
     @property

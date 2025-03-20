@@ -28,6 +28,10 @@ logs:
 logs-%:
 	docker-compose logs -f $(subst logs-,,$@)
 
+# Format code using Black
+format:
+	docker-compose exec web black .
+
 # Run Django management commands (e.g., make manage migrate)
 manage:
 	docker-compose exec web python manage.py $(filter-out $@,$(MAKECMDGOALS))
@@ -66,6 +70,7 @@ help:
 	@echo "  rebuild-dev      - Rebuild and start all services in development mode"
 	@echo "  logs             - View logs for all services"
 	@echo "  logs-<service>   - View logs for a specific service (e.g., logs-django)"
+	@echo "  format           - Format code using Black"
 	@echo "  manage <command> - Run Django management commands (e.g., make manage migrate)"
 	@echo "  test             - Run tests"
 	@echo "  shell            - Open a shell in the Django container"

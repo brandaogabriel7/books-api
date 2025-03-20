@@ -17,11 +17,11 @@ RUN pip install --upgrade pip
 
 # Copy the requirements files first (better caching)
 COPY requirements.txt /app/
-COPY requirements-test.txt /app/ 
+COPY requirements-dev.txt /app/ 
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt \
-  && pip install --no-cache-dir -r requirements-test.txt
+  && pip install --no-cache-dir -r requirements-dev.txt
 
 # Copy the Django project to the container
 COPY . /app/

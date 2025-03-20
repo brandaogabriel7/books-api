@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  web:
+    container_name: books_api
+    build:
+      context: books_api
+      dockerfile: Dockerfile.development
+    entrypoint: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./books_api:/app

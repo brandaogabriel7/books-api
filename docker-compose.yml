@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  web:
+    container_name: books_api
+    build:
+      context: books_api
+      dockerfile: Dockerfile
+    entrypoint: dockerize -wait tcp://books_db:5432 -wait tcp://books_redis:6379 -timeout 40s ./.docker/entrypoint.sh
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+      - redis
+    networks:
+      - db_network
+      - redis_network
+
+  db:
+    container_name: books_db
+    image: postgres:12
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    networks:
+      - db_network
+
+  redis:
+    container_name: books_redis
+    image: redis:5.0.7
+    ports:
+      - '6379:6379'
+    networks:
+      - redis_network
+
+networks:
+  db_network:
+  redis_network:

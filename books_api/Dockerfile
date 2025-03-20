@@ -25,6 +25,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Stage 2: Production stage
 FROM python:3.12.8-slim
 
+
+# Install Dockerize
+ENV DOCKERIZE_VERSION v0.6.1
+RUN apt-get update && apt-get install -y wget
+RUN wget http://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+
 RUN useradd -m -r appuser && \
   mkdir /app && \
   chown appuser /app
@@ -45,9 +53,9 @@ ENV PYTHONUNBUFFERED=1
 
 # Switch to non-root user
 USER appuser
- 
+
+# Ensure entrypoint.sh is executable
+RUN chmod +x /app/.docker/entrypoint.sh
+
 # Expose the application port
-EXPOSE 8000 
- 
-# Start the application using Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "books_api.wsgi:application"]
+EXPOSE 8000

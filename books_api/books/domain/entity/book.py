@@ -1,6 +1,8 @@
 from ..value_object.isbn10 import ISBN10
 from ..value_object.isbn13 import ISBN13
 
+from ..value_object.publish_date import PublishDate
+
 
 class Book:
     def __init__(
@@ -48,7 +50,7 @@ class Book:
         return self.__isbn13
 
     @property
-    def publishDate(self) -> str:
+    def publishDate(self) -> PublishDate:
         return self.__publishDate
 
     @property
@@ -86,10 +88,10 @@ class Book:
         if publisherName in self.__publishers:
             self.__publishers.remove(publisherName)
 
-    def changeISBN10(self, isbn10: str) -> None:
+    def changeISBN10(self, isbn10: ISBN10) -> None:
         self.__isbn10 = isbn10
 
-    def changeISBN13(self, isbn13: str) -> None:
+    def changeISBN13(self, isbn13: ISBN13) -> None:
         self.__isbn13 = isbn13
 
     def changeNumberOfPages(self, numberOfPages: int) -> None:
@@ -97,5 +99,5 @@ class Book:
             raise ValueError("Number of pages should be a positive number")
         self.__numberOfPages = numberOfPages
 
-    def changePublishDate(self, publishDate: str) -> None:
+    def changePublishDate(self, publishDate: PublishDate) -> None:
         self.__publishDate = publishDate

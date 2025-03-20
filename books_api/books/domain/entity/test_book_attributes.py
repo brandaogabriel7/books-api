@@ -5,6 +5,8 @@ from .book import Book
 from ..value_object.isbn10 import ISBN10
 from ..value_object.isbn13 import ISBN13
 
+from ..value_object.publish_date import PublishDate
+
 
 @pytest.mark.parametrize("title", ["New title", "Another title"])
 def test_changeBookTitle_success(title: str):
@@ -87,13 +89,13 @@ def test_bookISBN13():
 
 def test_publishDate():
     book = Book("123", "Title")
-    publishDate = "2021-10-01"
+    publishDate = PublishDate("2021-10-01")
     book.changePublishDate(publishDate)
     assert (
         book.publishDate == publishDate
     ), f"Publish date should be updated to '{publishDate}'"
 
-    publishDate = "2021-10-02"
+    publishDate = PublishDate("2021-10-02")
     book.changePublishDate(publishDate)
     assert (
         book.publishDate == publishDate

@@ -26,6 +26,10 @@ class Book:
     def authors(self) -> list[str]:
         return [author.name for author in self.__authors]
 
+    @property
+    def isbn(self) -> str:
+        return self.__isbn
+
     def __validate(self) -> None:
         if not self.__id or not self.__id.strip():
             raise ValueError("Book id is required")
@@ -47,3 +51,9 @@ class Book:
         self.__authors = [
             author for author in self.__authors if author.name != authorName
         ]
+
+    def changeISBN(self, isbn: str) -> None:
+        if not isbn or not isbn.strip():
+            raise ValueError("Book ISBN is required")
+
+        self.__isbn = isbn

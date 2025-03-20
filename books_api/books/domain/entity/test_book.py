@@ -105,3 +105,22 @@ def test_removeAuthors_shouldNotRemoveUnexistingAuthor():
 
     book.removeAuthor("Unexisting author")
     assert len(book.authors) == len(authors), "Authors should not be removed"
+
+
+@pytest.mark.parametrize("isbn", [None, "", "   "])
+def test_changeBookISBN_shouldFailWithoutISBN(isbn: str):
+    book = Book("123", "Title")
+    with pytest.raises(ValueError) as e:
+        book.changeISBN(isbn)
+    assert str(e.value) == "Book ISBN is required", "Should fail without ISBN"
+
+
+def test_changeBookISBN():
+    book = Book("123", "Title")
+    isbn = "1234567890"
+    book.changeISBN(isbn)
+    assert book.isbn == isbn, "ISBN should be updated"
+
+    isbn = "0987654321"
+    book.changeISBN(isbn)
+    assert book.isbn == isbn, "ISBN should be updated"

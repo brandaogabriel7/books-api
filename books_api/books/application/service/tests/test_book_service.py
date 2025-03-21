@@ -15,17 +15,17 @@ from books.domain.factory.book_factory import book_factory
             "title": "The Art of Community",
             "isbn10": "0596156715",
         },
-        # {
-        #     "title": "The Art of Community",
-        #     "isbn13": "9780596156718",
-        # },
+        {
+            "title": "The Art of Community",
+            "isbn13": "9780596156718",
+        },
     ],
 )
 def test_enrich_book_data_with_open_library(
     open_library_client: OpenLibraryClient,
     book_data: dict,
 ):
-    book_service = BookService(OpenLibraryClient())
+    book_service = BookService(open_library_client)
 
     book = book_factory(book_data)
 
@@ -51,7 +51,7 @@ def test_enrich_book_data_with_open_library(
 def test_not_enrich_book_data_withou_isbn(
     open_library_client: OpenLibraryClient,
 ):
-    book_service = BookService(OpenLibraryClient())
+    book_service = BookService(open_library_client)
 
     book = book_factory({"title": "The Art of Community"})
 

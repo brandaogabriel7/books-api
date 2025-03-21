@@ -10,7 +10,13 @@ from books.domain.factory.book_factory import book_factory
 
 from books.infrastructure.models.book_model import BookModel
 
+from books.application.service.book_service import BookService
+from books.infrastructure.open_library.open_library_client import (
+    OpenLibraryClient,
+)
+
 repository = DjangoBookRepository()
+book_service = BookService(OpenLibraryClient())
 
 
 @api_view(["GET", "POST"])
@@ -67,8 +73,6 @@ def __list_books(query):
     page_size = query.get("page_size", 10)
     filters = __build_filters(query)
 
-    print(filters)
-
     books = repository.list(page=page, page_size=page_size, filters=filters)
 
     return Response(
@@ -92,6 +96,8 @@ def __list_books(query):
 
 def __create_book(data):
     book = book_factory(data)
+
+    book = book_service.enrich_book_data(book)
 
     created_book = repository.create(book)
 
@@ -138,6 +144,8 @@ def __get_book(book_id):
 def __update_book(book_id, data):
     try:
         book = book_factory(data)
+
+        book = book_service.enrich_book_data(book)
 
         updated_book = repository.update(str(book_id), book)
 

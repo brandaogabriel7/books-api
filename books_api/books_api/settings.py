@@ -95,6 +95,7 @@ DATABASES = {
         "PASSWORD": "postgres",
         "HOST": "books_db",
         "PORT": "5432",
+        "TEST": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"},
     }
 }
 

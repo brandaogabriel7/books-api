@@ -24,14 +24,14 @@ def test_create_book(book_repository_fixture: dict):
     ]
     book = book_factory(
         {
-            "title": "Book 4",
-            "subtitle": "Book 4 subtitle",
-            "description": "This is book 4 description",
-            "authors": ["Author 1", "Author 2"],
-            "publishers": ["Publisher 1", "Publisher 2"],
+            "title": "New book",
+            "subtitle": "New subtitle",
+            "description": "This is the book description",
+            "authors": ["Author 1", "Author 2", "New Author"],
+            "publishers": ["Publisher 1", "Some other publisher"],
             "isbn10": "1234567894",
             "isbn13": "1234567894123",
-            "publishDate": "2021-01-01",
+            "publishDate": "2022-09-02",
             "numberOfPages": 100,
         }
     )
@@ -45,10 +45,12 @@ def test_create_book(book_repository_fixture: dict):
     assert (
         book_record.description == book.description
     ), "Book description should match"
-    assert book_record.authors.count() == 2, "Number of authors should match"
-    assert (
-        book_record.publishers.count() == 2
-    ), "Number of publishers should match"
+    assert [
+        author.name for author in book_record.authors.all()
+    ] == book.authors, "Authors should match"
+    assert [
+        publisher.name for publisher in book_record.publishers.all()
+    ] == book.publishers, "Publishers should match"
     assert book_record.isbn10 == book.isbn10.value, "ISBN10 should match"
     assert book_record.isbn13 == book.isbn13.value, "ISBN13 should match"
     assert book_record.publish_date == date.fromisoformat(

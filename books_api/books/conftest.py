@@ -10,6 +10,16 @@ from books.infrastructure.models.publisher_model import PublisherModel
 import books.infrastructure.models.book_model_mapper as book_model_mapper
 
 
+@pytest.fixture(scope="session")
+def django_db_modify_db_settings():
+    return {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": ":memory:",
+        }
+    }
+
+
 @pytest.fixture
 def persisted_books_fixture():
     authors = AuthorModel.objects.bulk_create(

@@ -1,5 +1,9 @@
+from datetime import date
+
 from books.domain.repository.book_repository import BookRepository
+
 from books.domain.entity.book import Book
+
 from books.domain.factory.book_factory import book_factory
 
 from books.infrastructure.models.book_model import BookModel
@@ -8,11 +12,33 @@ from books.infrastructure.models.publisher_model import PublisherModel
 
 
 class DjangoBookRepository(BookRepository):
-    def get(self, page: int, page_size: int, filters: object) -> list[Book]:
+    def list(self, page: int, page_size: int, filters: object) -> list[Book]:
         pass
 
     def get(self, book_id: str) -> Book:
-        pass
+        retrieved_book = BookModel.objects.get(id=book_id)
+
+        book = book_factory(
+            {
+                "id": str(retrieved_book.id),
+                "title": retrieved_book.title,
+                "subtitle": retrieved_book.subtitle,
+                "description": retrieved_book.description,
+                "authors": [
+                    author.name for author in retrieved_book.authors.all()
+                ],
+                "publishers": [
+                    publisher.name
+                    for publisher in retrieved_book.publishers.all()
+                ],
+                "isbn10": retrieved_book.isbn10,
+                "isbn13": retrieved_book.isbn13,
+                "publishDate": retrieved_book.publish_date.isoformat(),
+                "numberOfPages": retrieved_book.number_of_pages,
+            }
+        )
+
+        return book
 
     def create(self, book: Book) -> Book:
         new_book = BookModel.objects.create(
@@ -20,9 +46,9 @@ class DjangoBookRepository(BookRepository):
             title=book.title,
             subtitle=book.subtitle,
             description=book.description,
-            isbn10=book.isbn10,
-            isbn13=book.isbn13,
-            publish_date=book.publishDate,
+            isbn10=book.isbn10.value,
+            isbn13=book.isbn13.value,
+            publish_date=date.fromisoformat(book.publishDate.value),
             number_of_pages=book.numberOfPages,
         )
 
@@ -51,7 +77,7 @@ class DjangoBookRepository(BookRepository):
                 ],
                 "isbn10": new_book.isbn10,
                 "isbn13": new_book.isbn13,
-                "publishDate": new_book.publish_date,
+                "publishDate": new_book.publish_date.isoformat(),
                 "numberOfPages": new_book.number_of_pages,
             }
         )

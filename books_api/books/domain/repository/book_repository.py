@@ -5,7 +5,7 @@ from books.domain.entity.book import Book
 
 class BookRepository(ABC):
     @abstractmethod
-    def get(self, page: int, page_size: int, filters: object) -> list[Book]:
+    def list(self, page: int, page_size: int, filters: object) -> list[Book]:
         pass
 
     @abstractmethod

@@ -19,5 +19,7 @@ class PublishDate:
             raise ValueError("Invalid publish date format")
 
     @property
-    def value(self) -> str:
+    def value(self) -> datetime:
         return self.__value
+
+    # todo: make method to return datetime object

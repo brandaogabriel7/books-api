@@ -1,3 +1,5 @@
+from django.core.paginator import Paginator
+
 from datetime import date
 
 from books.domain.repository.book_repository import BookRepository
@@ -13,8 +15,17 @@ import books.infrastructure.models.book_model_mapper as book_model_mapper
 
 
 class DjangoBookRepository(BookRepository):
-    def list(self, page: int, page_size: int, filters: object) -> list[Book]:
-        pass
+    def list(
+        self, page: int = 1, page_size: int = 10, filters: object = {}
+    ) -> list[Book]:
+        filtered_books = BookModel.objects.filter(**filters).order_by("title")
+        paginator = Paginator(filtered_books, page_size)
+        books_page = paginator.get_page(page)
+
+        return [
+            book_model_mapper.book_entity(book)
+            for book in books_page.object_list
+        ]
 
     def get(self, book_id: str) -> Book:
         retrieved_book = BookModel.objects.get(id=book_id)

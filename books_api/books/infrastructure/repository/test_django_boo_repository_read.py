@@ -56,3 +56,61 @@ def test_get_book_notFound(book_repository_fixture: dict):
     ]
     with pytest.raises(BookModel.DoesNotExist):
         book_repository.get(str(uuid.uuid4()))
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("page_size, filters", [(1, {}), (2, {})])
+def test_list_books_pagination(
+    book_repository_fixture: dict, page_size: int, filters: dict
+):
+    book_repository: DjangoBookRepository = book_repository_fixture[
+        "repository"
+    ]
+    persisted_books: list[Book] = book_repository_fixture["persisted_books"]
+
+    pesisted_pages = [
+        persisted_books[i * page_size : (i + 1) * page_size]
+        for i in range(len(persisted_books) // page_size)
+    ]
+
+    pages = [
+        book_repository.list(page=i + 1, page_size=page_size, filters=filters)
+        for i in range(len(pesisted_pages))
+    ]
+
+    for i in range(len(pages)):
+        assert pages[i] is not None, f"Page {i+1} should be retrieved"
+        for j in range(len(pages[i])):
+            assert (
+                pages[i][j] is not None
+            ), f"Book {j} from page {i+1} should be retrieved"
+            assert (
+                pages[i][j].id == pesisted_pages[i][j].id
+            ), f"Book ID {j} from page {i+1} should match"
+            assert (
+                pages[i][j].title == pesisted_pages[i][j].title
+            ), f"Book title {j} from page {i+1} should match"
+            assert (
+                pages[i][j].subtitle == pesisted_pages[i][j].subtitle
+            ), f"Book subtitle {j} from page {i+1} should match"
+            assert (
+                pages[i][j].description == pesisted_pages[i][j].description
+            ), f"Book description {j} from page {i+1} should match"
+            assert (
+                pages[i][j].authors == pesisted_pages[i][j].authors
+            ), f"Book authors {j} from page {i+1} should match"
+            assert (
+                pages[i][j].publishers == pesisted_pages[i][j].publishers
+            ), f"Book publishers {j} from page {i+1} should match"
+            assert (
+                pages[i][j].isbn10 == pesisted_pages[i][j].isbn10
+            ), f"ISBN10 {j} from page {i+1} should match"
+            assert (
+                pages[i][j].isbn13 == pesisted_pages[i][j].isbn13
+            ), f"ISBN13 {j} from page {i+1} should match"
+            assert (
+                pages[i][j].publishDate == pesisted_pages[i][j].publishDate
+            ), f"Publish date {j} from page {i+1} should match"
+            assert (
+                pages[i][j].numberOfPages == pesisted_pages[i][j].numberOfPages
+            ), f"Number of pages {j} from page {i+1} should match"

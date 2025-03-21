@@ -197,3 +197,35 @@ def test_update_book_notFound(django_book_repository: DjangoBookRepository):
                 }
             ),
         )
+
+
+@pytest.mark.django_db
+def test_delete_book(django_book_repository: DjangoBookRepository):
+    created_book = BookModel.objects.create(
+        id=str(uuid.uuid4()),
+        title="Old title",
+        subtitle="Old subtitle",
+        description="Old description",
+        isbn10="1234567890",
+        isbn13="1234567890123",
+        publish_date=date.fromisoformat("2021-01-01"),
+        number_of_pages=100,
+    )
+
+    author1 = AuthorModel.objects.create(name="Author 1")
+    author2 = AuthorModel.objects.create(name="Author 2")
+    created_book.authors.set([author1, author2])
+
+    publisher = PublisherModel.objects.create(name="Publisher")
+    created_book.publishers.set([publisher])
+
+    django_book_repository.delete(created_book.id)
+
+    with pytest.raises(BookModel.DoesNotExist):
+        BookModel.objects.get(id=created_book.id)
+
+
+@pytest.mark.django_db
+def test_delete_book_notFound(django_book_repository: DjangoBookRepository):
+    with pytest.raises(BookModel.DoesNotExist):
+        django_book_repository.delete(str(uuid.uuid4()))

@@ -80,4 +80,10 @@ class DjangoBookRepository(BookRepository):
         return book_model_mapper.book_entity(existing_book)
 
     def delete(self, book_id: str) -> Book:
-        pass
+        book = BookModel.objects.get(id=book_id)
+
+        deleted_book = book_model_mapper.book_entity(book)
+
+        book.delete()
+
+        return deleted_book

@@ -1,7 +1,6 @@
 import pytest
 import uuid
 
-from datetime import date
 
 from books.domain.entity.book import Book
 
@@ -9,8 +8,6 @@ from books.infrastructure.repository.django_book_repository import (
     DjangoBookRepository,
 )
 from books.infrastructure.models.book_model import BookModel
-from books.infrastructure.models.author_model import AuthorModel
-from books.infrastructure.models.publisher_model import PublisherModel
 
 
 @pytest.mark.django_db

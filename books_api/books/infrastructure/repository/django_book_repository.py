@@ -4,7 +4,6 @@ from books.domain.repository.book_repository import BookRepository
 
 from books.domain.entity.book import Book
 
-from books.domain.factory.book_factory import book_factory
 
 from books.infrastructure.models.book_model import BookModel
 from books.infrastructure.models.author_model import AuthorModel

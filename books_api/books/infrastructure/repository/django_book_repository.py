@@ -10,6 +10,8 @@ from books.infrastructure.models.book_model import BookModel
 from books.infrastructure.models.author_model import AuthorModel
 from books.infrastructure.models.publisher_model import PublisherModel
 
+import books.infrastructure.models.book_model_mapper as book_model_mapper
+
 
 class DjangoBookRepository(BookRepository):
     def list(self, page: int, page_size: int, filters: object) -> list[Book]:
@@ -18,27 +20,7 @@ class DjangoBookRepository(BookRepository):
     def get(self, book_id: str) -> Book:
         retrieved_book = BookModel.objects.get(id=book_id)
 
-        book = book_factory(
-            {
-                "id": str(retrieved_book.id),
-                "title": retrieved_book.title,
-                "subtitle": retrieved_book.subtitle,
-                "description": retrieved_book.description,
-                "authors": [
-                    author.name for author in retrieved_book.authors.all()
-                ],
-                "publishers": [
-                    publisher.name
-                    for publisher in retrieved_book.publishers.all()
-                ],
-                "isbn10": retrieved_book.isbn10,
-                "isbn13": retrieved_book.isbn13,
-                "publishDate": retrieved_book.publish_date.isoformat(),
-                "numberOfPages": retrieved_book.number_of_pages,
-            }
-        )
-
-        return book
+        return book_model_mapper.book_entity(retrieved_book)
 
     def create(self, book: Book) -> Book:
         new_book = BookModel.objects.create(
@@ -65,27 +47,37 @@ class DjangoBookRepository(BookRepository):
         new_book.authors.set(author_instances)
         new_book.publishers.set(publisher_instances)
 
-        created_book = book_factory(
-            {
-                "id": new_book.id,
-                "title": new_book.title,
-                "subtitle": new_book.subtitle,
-                "description": new_book.description,
-                "authors": [author.name for author in new_book.authors.all()],
-                "publishers": [
-                    publisher.name for publisher in new_book.publishers.all()
-                ],
-                "isbn10": new_book.isbn10,
-                "isbn13": new_book.isbn13,
-                "publishDate": new_book.publish_date.isoformat(),
-                "numberOfPages": new_book.number_of_pages,
-            }
-        )
+        created_book = book_model_mapper.book_entity(new_book)
 
         return created_book
 
     def update(self, book_id: str, book: Book) -> Book:
-        pass
+        existing_book = BookModel.objects.get(id=book_id)
+
+        existing_book.title = book.title
+        existing_book.subtitle = book.subtitle
+        existing_book.description = book.description
+        existing_book.isbn10 = book.isbn10.value
+        existing_book.isbn13 = book.isbn13.value
+        existing_book.publish_date = date.fromisoformat(book.publishDate.value)
+        existing_book.number_of_pages = book.numberOfPages
+
+        author_instances = [
+            AuthorModel.objects.get_or_create(name=author)[0]
+            for author in book.authors
+        ]
+
+        publisher_instances = [
+            PublisherModel.objects.get_or_create(name=publisher)[0]
+            for publisher in book.publishers
+        ]
+
+        existing_book.authors.set(author_instances)
+        existing_book.publishers.set(publisher_instances)
+
+        existing_book.save()
+
+        return book_model_mapper.book_entity(existing_book)
 
     def delete(self, book_id: str) -> Book:
         pass

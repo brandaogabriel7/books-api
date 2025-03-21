@@ -105,3 +105,95 @@ def test_get_book(django_book_repository: DjangoBookRepository):
     assert (
         retrieved_book.numberOfPages == created_book.number_of_pages
     ), "Number of pages should match"
+
+
+@pytest.mark.django_db
+def test_get_book_notFound(django_book_repository: DjangoBookRepository):
+    with pytest.raises(BookModel.DoesNotExist):
+        django_book_repository.get(str(uuid.uuid4()))
+
+
+@pytest.mark.django_db
+def test_update_book(django_book_repository: DjangoBookRepository):
+    created_book = BookModel.objects.create(
+        id=str(uuid.uuid4()),
+        title="Old title",
+        subtitle="Old subtitle",
+        description="Old description",
+        isbn10="1234567890",
+        isbn13="1234567890123",
+        publish_date=date.fromisoformat("2021-01-01"),
+        number_of_pages=100,
+    )
+
+    author1 = AuthorModel.objects.create(name="Author 1")
+    author2 = AuthorModel.objects.create(name="Author 2")
+    created_book.authors.set([author1, author2])
+
+    publisher = PublisherModel.objects.create(name="Publisher")
+    created_book.publishers.set([publisher])
+
+    book = book_factory(
+        {
+            "title": "New title",
+            "subtitle": "New subtitle",
+            "description": "New description",
+            "authors": ["Author 1", "Author 2"],
+            "publishers": ["Publisher"],
+            "isbn10": "0987654321",
+            "isbn13": "0987654321098",
+            "publishDate": "2021-10-01",
+            "numberOfPages": 200,
+        }
+    )
+    updated_book = django_book_repository.update(created_book.id, book)
+
+    updated_book_record = BookModel.objects.get(id=updated_book.id)
+    assert updated_book_record is not None, "Book record should be updated"
+
+    assert updated_book_record.title == book.title, "Book title should match"
+    assert (
+        updated_book_record.subtitle == book.subtitle
+    ), "Book subtitle should match"
+    assert (
+        updated_book_record.description == book.description
+    ), "Book description should match"
+    assert [
+        author.name for author in updated_book_record.authors.all()
+    ] == book.authors, "Authors should match"
+    assert [
+        publisher.name for publisher in updated_book_record.publishers.all()
+    ] == book.publishers, "Publishers should match"
+    assert (
+        updated_book_record.isbn10 == book.isbn10.value
+    ), "ISBN10 should match"
+    assert (
+        updated_book_record.isbn13 == book.isbn13.value
+    ), "ISBN13 should match"
+    assert updated_book_record.publish_date == date.fromisoformat(
+        book.publishDate.value
+    ), "Publish date should match"
+    assert (
+        updated_book_record.number_of_pages == book.numberOfPages
+    ), "Number of pages should match"
+
+
+@pytest.mark.django_db
+def test_update_book_notFound(django_book_repository: DjangoBookRepository):
+    with pytest.raises(BookModel.DoesNotExist):
+        django_book_repository.update(
+            str(uuid.uuid4()),
+            book_factory(
+                {
+                    "title": "New title",
+                    "subtitle": "New subtitle",
+                    "description": "New description",
+                    "authors": ["Author 1", "Author 2"],
+                    "publishers": ["Publisher"],
+                    "isbn10": "0987654321",
+                    "isbn13": "0987654321098",
+                    "publishDate": "2021-10-01",
+                    "numberOfPages": 200,
+                }
+            ),
+        )

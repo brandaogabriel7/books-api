@@ -22,9 +22,16 @@ def book_factory(data: dict) -> Book:
     for publisher in publishers:
         book.addPublisher(publisher)
 
-    book.changeISBN10(ISBN10(data.get("isbn10")))
-    book.changeISBN13(ISBN13(data.get("isbn13")))
-    book.changePublishDate(PublishDate(data.get("publishDate")))
-    book.changeNumberOfPages(data.get("numberOfPages"))
+    if data.get("isbn10"):
+        book.changeISBN10(ISBN10(data.get("isbn10")))
+
+    if data.get("isbn13"):
+        book.changeISBN13(ISBN13(data.get("isbn13")))
+
+    if data.get("publishDate"):
+        book.changePublishDate(PublishDate(data.get("publishDate")))
+
+    if data.get("numberOfPages"):
+        book.changeNumberOfPages(data.get("numberOfPages"))
 
     return book

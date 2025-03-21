@@ -1,38 +1,38 @@
 up:
-	docker-compose up -d
+	docker compose up -d
 
 up-dev:
-	docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+	docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 
 down:
-	docker-compose down
+	docker compose down
 
 rebuild:
-	docker-compose up -d --build
+	docker compose up -d --build
 
 rebuild-dev:
-	docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+	docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
 
 logs:
-	docker-compose logs -f
+	docker compose logs -f
 
 logs-%:
-	docker-compose logs -f $(subst logs-,,$@)
+	docker compose logs -f $(subst logs-,,$@)
 
 format:
-	docker-compose exec web black .
+	docker compose exec web black .
 
 test:
-	docker-compose exec web python -m pytest
+	docker compose exec web python -m pytest
 
 shell:
-	docker-compose exec web /bin/bash
+	docker compose exec web /bin/bash
 
 migrate:
-	docker-compose exec web python manage.py migrate
+	docker compose exec web python manage.py migrate
 
 clean:
-	docker-compose down -v
+	docker compose down -v
 
 help:
 	@echo "Available commands:"

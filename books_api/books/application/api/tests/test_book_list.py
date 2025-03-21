@@ -147,3 +147,55 @@ def test_list_books_filters(book_api_fixture: dict):
     assert (
         response_data[0]["id"] == persisted_books[0].id
     ), "Book ID should match the filter"
+
+
+@pytest.mark.django_db
+def test_create_book(book_api_fixture: dict):
+    base_url: str = reverse("book-list")
+    api_client: APIClient = book_api_fixture["client"]
+    book_data: dict = {
+        "title": "Book 4",
+        "subtitle": "Subtitle 4",
+        "description": "Description 4",
+        "authors": ["Author 1"],
+        "publishers": ["Publisher 1"],
+        "isbn10": "1234567893",
+        "isbn13": "1234567893123",
+        "publishDate": "2021-03-01",
+        "numberOfPages": 100,
+    }
+
+    response = api_client.post(base_url, book_data, format="json")
+
+    assert response.status_code == 201, "Status code should be 201"
+    response_data = response.json()
+    assert response_data is not None, "Response should have data"
+    assert response_data["id"] is not None, "Book ID should be generated"
+    assert (
+        response_data["title"] == book_data["title"]
+    ), "Book title should match the request"
+    assert (
+        response_data["subtitle"] == book_data["subtitle"]
+    ), "Book subtitle should match the request"
+    assert (
+        response_data["description"] == book_data["description"]
+    ), "Book description should match the request"
+    assert (
+        response_data["authors"] == book_data["authors"]
+    ), "Book authors should match the request"
+    assert (
+        response_data["publishers"] == book_data["publishers"]
+    ), "Book publishers should match the request"
+    assert (
+        response_data["isbn10"] == book_data["isbn10"]
+    ), "Book ISBN10 should match the request"
+    assert (
+        response_data["isbn13"] == book_data["isbn13"]
+    ), "Book ISBN13 should match the request"
+    assert (
+        response_data["publishDate"] == book_data["publishDate"]
+    ), "Book publish date should match the request"
+    assert (
+        response_data["numberOfPages"] == book_data["numberOfPages"]
+    ), "Book number of pages should match the request"
+    assert response_data["id"] is not None, "Book ID should be generated"

@@ -13,6 +13,10 @@ class Book:
         self.__description = description
         self.__authors = []
         self.__publishers = []
+        self.__isbn10 = None
+        self.__isbn13 = None
+        self.__publishDate = None
+        self.__numberOfPages = None
 
         self.__validate()
 

@@ -136,3 +136,63 @@ def test_list_books_filter_isbn(book_repository_fixture: dict):
     assert len(filtered_books) == 1, "Only one book should be retrieved"
     assert filtered_books[0].isbn10.value == isbn, "Book ISBN10 should match"
     assert filtered_books[0].id == persisted_books[1].id, "Book ID should match"
+
+
+@pytest.mark.django_db
+def test_list_books_filter_isbn_notFound(book_repository_fixture: dict):
+    book_repository: DjangoBookRepository = book_repository_fixture[
+        "repository"
+    ]
+    filtered_books = book_repository.list(filters={"isbn": "0000000000"})
+    assert filtered_books is not None
+    assert len(filtered_books) == 0, "No books should be retrieved"
+
+
+@pytest.mark.django_db
+def test_list_books_filters(book_repository_fixture: dict):
+    book_repository: DjangoBookRepository = book_repository_fixture[
+        "repository"
+    ]
+    persisted_books: list[Book] = book_repository_fixture["persisted_books"]
+
+    filters = {
+        "title": "Book 1",
+        "subtitle": "Subtitle 1",
+        "description": "Description 1",
+        "authors": ["Author 1"],
+        "publishers": ["Publisher 1"],
+        "publishDate": "2021-01-01",
+        "numberOfPages": 100,
+    }
+
+    filtered_books = book_repository.list(filters=filters)
+    assert filtered_books is not None, "Filtered books should be retrieved"
+    assert len(filtered_books) == 1, "Only one book should be retrieved"
+    assert filtered_books[0].id == persisted_books[0].id, "Book ID should match"
+
+    filters = {
+        "title": "book 2",
+        "subtitle": "Subtitle 2",
+        "description": "Description 2",
+        "publishers": ["Publisher 1"],
+        "publishDate": "2022-11-10",
+        "numberOfPages": 100,
+    }
+
+    filtered_books = book_repository.list(filters=filters)
+    assert filtered_books is not None, "Filtered books should be retrieved"
+    assert len(filtered_books) == 1, "Only one book should be retrieved"
+    assert filtered_books[0].id == persisted_books[1].id, "Book ID should match"
+
+    filters = {
+        "title": "Book 3",
+        "subtitle": "subtitle 3",
+        "description": "description 3",
+        "authors": ["Author 1"],
+        "publishDate": "2021-03-01",
+        "numberOfPages": 100,
+    }
+
+    filtered_books = book_repository.list(filters=filters)
+    assert filtered_books is not None, "Filtered books should be retrieved"
+    assert len(filtered_books) == 0, "No books should be retrieved"

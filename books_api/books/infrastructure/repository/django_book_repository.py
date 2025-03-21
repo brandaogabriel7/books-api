@@ -16,11 +16,35 @@ import books.infrastructure.models.book_model_mapper as book_model_mapper
 
 
 class DjangoBookRepository(BookRepository):
+
+    def __build_query(self, filters: object) -> Q:
+        isbn = filters.get("isbn", None)
+        if isbn:
+            return Q(isbn10=isbn) | Q(isbn13=isbn)
+
+        built_filters = {}
+        for key, value in filters.items():
+            if key == "title":
+                built_filters["title__icontains"] = value
+            if key == "subtitle":
+                built_filters["subtitle__icontains"] = value
+            if key == "description":
+                built_filters["description__icontains"] = value
+            if key == "authors":
+                built_filters["authors__name__in"] = value
+            if key == "publishers":
+                built_filters["publishers__name__in"] = value
+            if key == "publishDate":
+                built_filters["publish_date"] = date.fromisoformat(value)
+            if key == "numberOfPages":
+                built_filters["number_of_pages"] = value
+
+        return Q(**built_filters)
+
     def list(
         self, page: int = 1, page_size: int = 10, filters: object = {}
     ) -> list[Book]:
-        isbn = filters.get("isbn", None)
-        query = Q(isbn10=isbn) | Q(isbn13=isbn) if isbn else Q()
+        query = self.__build_query(filters)
 
         filtered_books = BookModel.objects.filter(query).order_by("title")
         paginator = Paginator(filtered_books, page_size)

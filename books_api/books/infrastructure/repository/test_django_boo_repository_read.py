@@ -59,10 +59,8 @@ def test_get_book_notFound(book_repository_fixture: dict):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("page_size, filters", [(1, {}), (2, {})])
-def test_list_books_pagination(
-    book_repository_fixture: dict, page_size: int, filters: dict
-):
+@pytest.mark.parametrize("page_size", [1, 2])
+def test_list_books_pagination(book_repository_fixture: dict, page_size: int):
     book_repository: DjangoBookRepository = book_repository_fixture[
         "repository"
     ]
@@ -74,7 +72,7 @@ def test_list_books_pagination(
     ]
 
     pages = [
-        book_repository.list(page=i + 1, page_size=page_size, filters=filters)
+        book_repository.list(page=i + 1, page_size=page_size)
         for i in range(len(pesisted_pages))
     ]
 
@@ -114,3 +112,27 @@ def test_list_books_pagination(
             assert (
                 pages[i][j].numberOfPages == pesisted_pages[i][j].numberOfPages
             ), f"Number of pages {j} from page {i+1} should match"
+
+
+@pytest.mark.django_db
+def test_list_books_filter_isbn(book_repository_fixture: dict):
+    book_repository: DjangoBookRepository = book_repository_fixture[
+        "repository"
+    ]
+    persisted_books: list[Book] = book_repository_fixture["persisted_books"]
+
+    isbn = persisted_books[0].isbn13.value
+
+    filtered_books = book_repository.list(filters={"isbn": isbn})
+    assert filtered_books is not None, "Filtered books should be retrieved"
+    assert len(filtered_books) == 1, "Only one book should be retrieved"
+    assert filtered_books[0].isbn13.value == isbn, "Book ISBN13 should match"
+    assert filtered_books[0].id == persisted_books[0].id, "Book ID should match"
+
+    isbn = persisted_books[1].isbn10.value
+
+    filtered_books = book_repository.list(filters={"isbn": isbn})
+    assert filtered_books is not None, "Filtered books should be retrieved"
+    assert len(filtered_books) == 1, "Only one book should be retrieved"
+    assert filtered_books[0].isbn10.value == isbn, "Book ISBN10 should match"
+    assert filtered_books[0].id == persisted_books[1].id, "Book ID should match"

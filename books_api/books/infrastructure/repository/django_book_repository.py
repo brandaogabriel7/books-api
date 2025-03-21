@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 from datetime import date
 
@@ -18,7 +19,10 @@ class DjangoBookRepository(BookRepository):
     def list(
         self, page: int = 1, page_size: int = 10, filters: object = {}
     ) -> list[Book]:
-        filtered_books = BookModel.objects.filter(**filters).order_by("title")
+        isbn = filters.get("isbn", None)
+        query = Q(isbn10=isbn) | Q(isbn13=isbn) if isbn else Q()
+
+        filtered_books = BookModel.objects.filter(query).order_by("title")
         paginator = Paginator(filtered_books, page_size)
         books_page = paginator.get_page(page)
 

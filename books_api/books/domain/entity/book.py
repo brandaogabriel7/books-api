@@ -100,3 +100,19 @@ class Book:
 
     def changePublishDate(self, publishDate: PublishDate) -> None:
         self.__publishDate = publishDate
+
+    def __eq__(self, other):
+        if not isinstance(other, Book):
+            return False
+        return (
+            self.id == other.id
+            and self.title == other.title
+            and self.subtitle == other.subtitle
+            and self.description == other.description
+            and self.authors == other.authors
+            and self.publishers == other.publishers
+            and self.isbn10 == other.isbn10
+            and self.isbn13 == other.isbn13
+            and self.publishDate == other.publishDate
+            and self.numberOfPages == other.numberOfPages
+        )

@@ -29,25 +29,4 @@ def test_create_book(django_book_repository: DjangoBookRepository):
     )
     created_book = django_book_repository.create(book)
 
-    assert created_book.id == book.id, "Book id should be the same"
-    assert created_book.title == book.title, "Book title should be the same"
-    assert (
-        created_book.subtitle == book.subtitle
-    ), "Book subtitle should be the same"
-    assert (
-        created_book.description == book.description
-    ), "Book description should be the same"
-    # assert (
-    #     created_book.authors == book.authors
-    # ), "Book authors should be the same"
-    # assert (
-    #     created_book.publishers == book.publishers
-    # ), "Book publishers should be the same"
-    assert created_book.isbn10 == book.isbn10, "Book isbn10 should be the same"
-    assert created_book.isbn13 == book.isbn13, "Book isbn13 should be the same"
-    assert (
-        created_book.publishDate == book.publishDate
-    ), "Book publish date should be the same"
-    assert (
-        created_book.numberOfPages == book.numberOfPages
-    ), "Book numbers of pages should be the same"
+    assert created_book == book, "Book should be created"

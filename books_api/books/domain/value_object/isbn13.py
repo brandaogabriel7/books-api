@@ -8,3 +8,8 @@ class ISBN13:
     @property
     def value(self) -> str:
         return self.__value
+
+    def __eq__(self, o: object) -> bool:
+        if not isinstance(o, ISBN13):
+            return False
+        return self.value == o.value

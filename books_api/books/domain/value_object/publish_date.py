@@ -22,4 +22,7 @@ class PublishDate:
     def value(self) -> datetime:
         return self.__value
 
-    # todo: make method to return datetime object
+    def __eq__(self, o: object) -> bool:
+        if not isinstance(o, PublishDate):
+            return False
+        return self.value == o.value

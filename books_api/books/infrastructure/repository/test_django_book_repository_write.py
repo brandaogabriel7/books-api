@@ -3,13 +3,18 @@ import uuid
 
 from datetime import date
 
+from books.domain.entity.book import Book
+
 from books.domain.factory.book_factory import book_factory
 from books.infrastructure.repository.django_book_repository import (
     DjangoBookRepository,
 )
+
 from books.infrastructure.models.book_model import BookModel
 from books.infrastructure.models.author_model import AuthorModel
 from books.infrastructure.models.publisher_model import PublisherModel
+
+import books.infrastructure.models.book_model_mapper as book_model_mapper
 
 
 @pytest.mark.django_db
@@ -19,13 +24,13 @@ def test_create_book(book_repository_fixture: dict):
     ]
     book = book_factory(
         {
-            "title": "New title",
-            "subtitle": "New subtitle",
-            "description": "New description",
+            "title": "Book 4",
+            "subtitle": "Book 4 subtitle",
+            "description": "This is book 4 description",
             "authors": ["Author 1", "Author 2"],
             "publishers": ["Publisher 1", "Publisher 2"],
-            "isbn10": "1234567890",
-            "isbn13": "1234567890123",
+            "isbn10": "1234567894",
+            "isbn13": "1234567894123",
             "publishDate": "2021-01-01",
             "numberOfPages": 100,
         }
@@ -59,26 +64,12 @@ def test_update_book(book_repository_fixture: dict):
     book_repository: DjangoBookRepository = book_repository_fixture[
         "repository"
     ]
-    created_book = BookModel.objects.create(
-        id=str(uuid.uuid4()),
-        title="Old title",
-        subtitle="Old subtitle",
-        description="Old description",
-        isbn10="1234567890",
-        isbn13="1234567890123",
-        publish_date=date.fromisoformat("2021-01-01"),
-        number_of_pages=100,
-    )
 
-    author1 = AuthorModel.objects.create(name="Author 1")
-    author2 = AuthorModel.objects.create(name="Author 2")
-    created_book.authors.set([author1, author2])
-
-    publisher = PublisherModel.objects.create(name="Publisher")
-    created_book.publishers.set([publisher])
+    book_to_update: Book = book_repository_fixture["persisted_books"][0]
 
     book = book_factory(
         {
+            "id": book_to_update.id,
             "title": "New title",
             "subtitle": "New subtitle",
             "description": "New description",
@@ -90,7 +81,7 @@ def test_update_book(book_repository_fixture: dict):
             "numberOfPages": 200,
         }
     )
-    updated_book = book_repository.update(created_book.id, book)
+    updated_book = book_repository.update(book_to_update.id, book)
 
     updated_book_record = BookModel.objects.get(id=updated_book.id)
     assert updated_book_record is not None, "Book record should be updated"
@@ -128,10 +119,12 @@ def test_update_book_notFound(book_repository_fixture: dict):
         "repository"
     ]
     with pytest.raises(BookModel.DoesNotExist):
+        non_existent_book_id = str(uuid.uuid4())
         book_repository.update(
-            str(uuid.uuid4()),
+            non_existent_book_id,
             book_factory(
                 {
+                    "id": non_existent_book_id,
                     "title": "New title",
                     "subtitle": "New subtitle",
                     "description": "New description",
@@ -151,28 +144,13 @@ def test_delete_book(book_repository_fixture: dict):
     book_repository: DjangoBookRepository = book_repository_fixture[
         "repository"
     ]
-    created_book = BookModel.objects.create(
-        id=str(uuid.uuid4()),
-        title="Old title",
-        subtitle="Old subtitle",
-        description="Old description",
-        isbn10="1234567890",
-        isbn13="1234567890123",
-        publish_date=date.fromisoformat("2021-01-01"),
-        number_of_pages=100,
-    )
 
-    author1 = AuthorModel.objects.create(name="Author 1")
-    author2 = AuthorModel.objects.create(name="Author 2")
-    created_book.authors.set([author1, author2])
+    book_to_delete: Book = book_repository_fixture["persisted_books"][0]
 
-    publisher = PublisherModel.objects.create(name="Publisher")
-    created_book.publishers.set([publisher])
-
-    book_repository.delete(created_book.id)
+    book_repository.delete(book_to_delete.id)
 
     with pytest.raises(BookModel.DoesNotExist):
-        BookModel.objects.get(id=created_book.id)
+        BookModel.objects.get(id=book_to_delete.id)
 
 
 @pytest.mark.django_db

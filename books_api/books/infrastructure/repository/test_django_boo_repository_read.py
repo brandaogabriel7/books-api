@@ -3,8 +3,6 @@ import uuid
 
 from datetime import date
 
-from books.domain.entity.book import Book
-from books.domain.factory.book_factory import book_factory
 from books.infrastructure.repository.django_book_repository import (
     DjangoBookRepository,
 )
@@ -14,9 +12,10 @@ from books.infrastructure.models.publisher_model import PublisherModel
 
 
 @pytest.mark.django_db
-def test_get_book():
-    repository = DjangoBookRepository()
-
+def test_get_book(book_repository_fixture: dict):
+    book_repository: DjangoBookRepository = book_repository_fixture[
+        "repository"
+    ]
     created_book = BookModel.objects.create(
         id=str(uuid.uuid4()),
         title="Old title",
@@ -35,7 +34,7 @@ def test_get_book():
     publisher = PublisherModel.objects.create(name="Publisher")
     created_book.publishers.set([publisher])
 
-    retrieved_book = repository.get(created_book.id)
+    retrieved_book = book_repository.get(created_book.id)
     assert retrieved_book is not None, "Book should be retrieved"
     assert retrieved_book.id == created_book.id, "Book id should match"
     assert retrieved_book.title == created_book.title, "Book title should match"
@@ -66,7 +65,9 @@ def test_get_book():
 
 
 @pytest.mark.django_db
-def test_get_book_notFound():
-    repository = DjangoBookRepository()
+def test_get_book_notFound(book_repository_fixture: dict):
+    book_repository: DjangoBookRepository = book_repository_fixture[
+        "repository"
+    ]
     with pytest.raises(BookModel.DoesNotExist):
-        repository.get(str(uuid.uuid4()))
+        book_repository.get(str(uuid.uuid4()))

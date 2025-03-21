@@ -3,7 +3,6 @@ import uuid
 
 from datetime import date
 
-from books.domain.entity.book import Book
 from books.domain.factory.book_factory import book_factory
 from books.infrastructure.repository.django_book_repository import (
     DjangoBookRepository,
@@ -14,8 +13,10 @@ from books.infrastructure.models.publisher_model import PublisherModel
 
 
 @pytest.mark.django_db
-def test_create_book():
-    repository = DjangoBookRepository()
+def test_create_book(book_repository_fixture: dict):
+    book_repository: DjangoBookRepository = book_repository_fixture[
+        "repository"
+    ]
     book = book_factory(
         {
             "title": "New title",
@@ -29,7 +30,7 @@ def test_create_book():
             "numberOfPages": 100,
         }
     )
-    created_book = repository.create(book)
+    created_book = book_repository.create(book)
 
     book_record = BookModel.objects.get(id=created_book.id)
     assert book_record is not None, "Book record should be created"
@@ -54,8 +55,10 @@ def test_create_book():
 
 
 @pytest.mark.django_db
-def test_update_book():
-    repository = DjangoBookRepository()
+def test_update_book(book_repository_fixture: dict):
+    book_repository: DjangoBookRepository = book_repository_fixture[
+        "repository"
+    ]
     created_book = BookModel.objects.create(
         id=str(uuid.uuid4()),
         title="Old title",
@@ -87,7 +90,7 @@ def test_update_book():
             "numberOfPages": 200,
         }
     )
-    updated_book = repository.update(created_book.id, book)
+    updated_book = book_repository.update(created_book.id, book)
 
     updated_book_record = BookModel.objects.get(id=updated_book.id)
     assert updated_book_record is not None, "Book record should be updated"
@@ -120,10 +123,12 @@ def test_update_book():
 
 
 @pytest.mark.django_db
-def test_update_book_notFound():
-    repository = DjangoBookRepository()
+def test_update_book_notFound(book_repository_fixture: dict):
+    book_repository: DjangoBookRepository = book_repository_fixture[
+        "repository"
+    ]
     with pytest.raises(BookModel.DoesNotExist):
-        repository.update(
+        book_repository.update(
             str(uuid.uuid4()),
             book_factory(
                 {
@@ -142,8 +147,10 @@ def test_update_book_notFound():
 
 
 @pytest.mark.django_db
-def test_delete_book():
-    repository = DjangoBookRepository()
+def test_delete_book(book_repository_fixture: dict):
+    book_repository: DjangoBookRepository = book_repository_fixture[
+        "repository"
+    ]
     created_book = BookModel.objects.create(
         id=str(uuid.uuid4()),
         title="Old title",
@@ -162,14 +169,16 @@ def test_delete_book():
     publisher = PublisherModel.objects.create(name="Publisher")
     created_book.publishers.set([publisher])
 
-    repository.delete(created_book.id)
+    book_repository.delete(created_book.id)
 
     with pytest.raises(BookModel.DoesNotExist):
         BookModel.objects.get(id=created_book.id)
 
 
 @pytest.mark.django_db
-def test_delete_book_notFound():
-    repository = DjangoBookRepository()
+def test_delete_book_notFound(book_repository_fixture: dict):
+    book_repository: DjangoBookRepository = book_repository_fixture[
+        "repository"
+    ]
     with pytest.raises(BookModel.DoesNotExist):
-        repository.delete(str(uuid.uuid4()))
+        book_repository.delete(str(uuid.uuid4()))

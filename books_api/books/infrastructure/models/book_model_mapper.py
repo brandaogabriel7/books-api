@@ -16,7 +16,11 @@ def book_entity(book_model: BookModel) -> Book:
             ],
             "isbn10": book_model.isbn10,
             "isbn13": book_model.isbn13,
-            "publishDate": book_model.publish_date.isoformat(),
+            "publishDate": (
+                book_model.publish_date.isoformat()
+                if book_model.publish_date
+                else None
+            ),
             "numberOfPages": book_model.number_of_pages,
         }
     )

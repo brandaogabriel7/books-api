@@ -66,9 +66,13 @@ class DjangoBookRepository(BookRepository):
             title=book.title,
             subtitle=book.subtitle,
             description=book.description,
-            isbn10=book.isbn10.value,
-            isbn13=book.isbn13.value,
-            publish_date=date.fromisoformat(book.publishDate.value),
+            isbn10=book.isbn10.value if book.isbn10 else None,
+            isbn13=book.isbn13.value if book.isbn13 else None,
+            publish_date=(
+                date.fromisoformat(book.publishDate.value)
+                if book.publishDate is not None
+                else None
+            ),
             number_of_pages=book.numberOfPages,
         )
 

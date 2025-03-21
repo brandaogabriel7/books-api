@@ -84,9 +84,11 @@ def __list_books(query):
                 "description": book.description,
                 "authors": book.authors,
                 "publishers": book.publishers,
-                "isbn10": book.isbn10.value,
-                "isbn13": book.isbn13.value,
-                "publishDate": book.publishDate.value,
+                "isbn10": book.isbn10.value if book.isbn10 else None,
+                "isbn13": book.isbn13.value if book.isbn13 else None,
+                "publishDate": (
+                    book.publishDate.value if book.publishDate else None
+                ),
                 "numberOfPages": book.numberOfPages,
             }
             for book in books
@@ -110,9 +112,17 @@ def __create_book(data):
             "description": created_book.description,
             "authors": created_book.authors,
             "publishers": created_book.publishers,
-            "isbn10": created_book.isbn10.value,
-            "isbn13": created_book.isbn13.value,
-            "publishDate": created_book.publishDate.value,
+            "isbn10": (
+                created_book.isbn10.value if created_book.isbn10 else None
+            ),
+            "isbn13": (
+                created_book.isbn13.value if created_book.isbn13 else None
+            ),
+            "publishDate": (
+                created_book.publishDate.value
+                if created_book.publishDate
+                else None
+            ),
             "numberOfPages": created_book.numberOfPages,
         },
     )
@@ -130,9 +140,11 @@ def __get_book(book_id):
                 "description": book.description,
                 "authors": book.authors,
                 "publishers": book.publishers,
-                "isbn10": book.isbn10.value,
-                "isbn13": book.isbn13.value,
-                "publishDate": book.publishDate.value,
+                "isbn10": book.isbn10.value if book.isbn10 else None,
+                "isbn13": book.isbn13.value if book.isbn13 else None,
+                "publishDate": (
+                    book.publishDate.value if book.publishDate else None
+                ),
                 "numberOfPages": book.numberOfPages,
             }
         )
@@ -157,9 +169,17 @@ def __update_book(book_id, data):
                 "description": updated_book.description,
                 "authors": updated_book.authors,
                 "publishers": updated_book.publishers,
-                "isbn10": updated_book.isbn10.value,
-                "isbn13": updated_book.isbn13.value,
-                "publishDate": updated_book.publishDate.value,
+                "isbn10": (
+                    updated_book.isbn10.value if updated_book.isbn10 else None
+                ),
+                "isbn13": (
+                    updated_book.isbn13.value if updated_book.isbn13 else None
+                ),
+                "publishDate": (
+                    updated_book.publishDate.value
+                    if updated_book.publishDate
+                    else None
+                ),
                 "numberOfPages": updated_book.numberOfPages,
             }
         )
@@ -180,9 +200,17 @@ def __delete_book(book_id):
                 "description": deleted_book.description,
                 "authors": deleted_book.authors,
                 "publishers": deleted_book.publishers,
-                "isbn10": deleted_book.isbn10.value,
-                "isbn13": deleted_book.isbn13.value,
-                "publishDate": deleted_book.publishDate.value,
+                "isbn10": (
+                    deleted_book.isbn10.value if deleted_book.isbn10 else None
+                ),
+                "isbn13": (
+                    deleted_book.isbn13.value if deleted_book.isbn13 else None
+                ),
+                "publishDate": (
+                    deleted_book.publishDate.value
+                    if deleted_book.publishDate
+                    else None
+                ),
                 "numberOfPages": deleted_book.numberOfPages,
             },
         )

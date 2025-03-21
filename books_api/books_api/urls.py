@@ -21,7 +21,7 @@ from django.conf import settings
 from django.urls import include
 
 urlpatterns = [
-    path("api/books", include("books.application.api.urls")),
+    path("api/books/", include("books.application.api.urls")),
 ]
 
 if settings.DEBUG:

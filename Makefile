@@ -1,8 +1,10 @@
 up:
 	docker compose up -d
+	$(MAKE) migrate
 
 up-dev:
 	docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+	$(MAKE) migrate
 
 down:
 	docker compose down
@@ -31,7 +33,7 @@ shell:
 migrate:
 	docker compose exec web python manage.py migrate
 
-seed-db:
+seed-db: migrate
 	docker compose exec web python manage.py seed_books
 
 clean:

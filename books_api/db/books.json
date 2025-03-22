@@ -1,0 +1,50 @@
+[
+  {
+    "id": "e9f8ce4d-360b-4bee-9e4b-fde85b6b9dd6",
+    "title": "Cytonic",
+    "subtitle": "",
+    "description": null,
+    "authors": ["Brandon Sanderson"],
+    "publishers": ["Random House Publishing Group"],
+    "isbn10": null,
+    "isbn13": "9780399555886",
+    "publishDate": null,
+    "numberOfPages": null
+  },
+  {
+    "id": "9cfe375b-5175-4937-b79a-07050bf13b1c",
+    "title": "Defiant",
+    "subtitle": "",
+    "description": "",
+    "authors": ["Brandon Sanderson"],
+    "publishers": ["Random House Publishing Group"],
+    "isbn10": null,
+    "isbn13": "9780593309735",
+    "publishDate": null,
+    "numberOfPages": null
+  },
+  {
+    "id": "bcb49ad0-ec92-416f-b542-9d468e49a415",
+    "title": "Skyward",
+    "subtitle": "",
+    "description": null,
+    "authors": ["Brandon Sanderson"],
+    "publishers": ["Delacorte Press"],
+    "isbn10": "0399555773",
+    "isbn13": "9780399555770",
+    "publishDate": null,
+    "numberOfPages": 513
+  },
+  {
+    "id": "79a40c63-5456-4c1f-8303-e2260b3fe9e1",
+    "title": "Starsight",
+    "subtitle": "",
+    "description": null,
+    "authors": ["Brandon Sanderson"],
+    "publishers": ["Ember"],
+    "isbn10": "0399555846",
+    "isbn13": "9780399555848",
+    "publishDate": null,
+    "numberOfPages": 480
+  }
+]

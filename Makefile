@@ -31,6 +31,9 @@ shell:
 migrate:
 	docker compose exec web python manage.py migrate
 
+seed-db:
+	docker compose exec web python manage.py seed_books
+
 clean:
 	docker compose down -v
 
@@ -47,4 +50,5 @@ help:
 	@echo "  test             - Run tests"
 	@echo "  shell            - Open a shell in the Django container"
 	@echo "  migrate          - Run migrations"
+	@echo "  seed-db          - Seed the database with sample data"
 	@echo "  clean            - Stop and remove all containers, networks, and volumes"

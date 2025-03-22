@@ -1,11 +1,16 @@
 import requests
 from datetime import datetime
 
+from books.infrastructure.cache.redis_cache import (
+    redis_cache,
+)
+
 
 class OpenLibraryClient:
     def __init__(self):
         self.__base_url = "https://openlibrary.org"
 
+    @redis_cache(cache_key_prefix="open_library_get_book_info")
     def get_book_info(self, isbn: str) -> dict:
         try:
             response = requests.get(
@@ -75,6 +80,7 @@ class OpenLibraryClient:
         except Exception as e:
             return None
 
+    @redis_cache(cache_key_prefix="open_library_get_book_work")
     def get_book_work(self, workKey: str) -> dict:
         try:
             response = requests.get(

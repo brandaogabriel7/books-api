@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Set up application
-        run: make up-dev
+        run: make up
       - name: Run tests
         run: make test
       - name: Stop application

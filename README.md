@@ -47,11 +47,7 @@ make seed-db
 
 ## Postman collection
 
-I created a Postman collection with all the requests you can make to the API. You can import it by clicking the button below:
-
-<!-- TODO: create postman collection -->
-
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/1f3b3b3b3b3b3b3b3b3b)
+I created a Postman collection with all the requests you can make to the API. It's available [here](./Books%20API.postman_collection.json).
 
 ## Stack
 
@@ -97,7 +93,9 @@ Besides the commands mentioned above, I created some other useful commands to he
   - `make logs-web`: Show the Django logs
   - `make logs-db`: Show the PostgreSQL logs
   - `make logs-redis`: Show the Redis logs
-- `make shell`: Access the Django container shell
+- `make shell-web`: Access the Django container shell
+- `make shell-db`: Access the PostgreSQL container shell
+- `make shell-redis`: Access the Redis container shell
 - `make format`: Format the code using `black`
 - `make up-prod`: Start the application production environment (the Docker image is optimized for production and there's no volume mounted for the code)
 - `make rebuild-prod`: Rebuild the application production environment

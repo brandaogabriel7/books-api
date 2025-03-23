@@ -27,8 +27,8 @@ format:
 test:
 	docker compose exec web python -m pytest
 
-shell:
-	docker compose exec web /bin/bash
+shell-%:
+	docker compose exec $(subst shell-,,$@) /bin/bash
 
 migrate:
 	docker compose exec web python manage.py migrate
@@ -50,7 +50,7 @@ help:
 	@echo "  logs-<service>   - View logs for a specific service (e.g., logs-web)"
 	@echo "  format           - Format code using Black"
 	@echo "  test             - Run tests"
-	@echo "  shell            - Open a shell in the Django container"
+	@echo "  shell-<service>  - Open a shell in a specific service (e.g., shell-web)"
 	@echo "  migrate          - Run migrations"
 	@echo "  seed-db          - Seed the database with sample data"
 	@echo "  clean            - Stop and remove all containers, networks, and volumes"

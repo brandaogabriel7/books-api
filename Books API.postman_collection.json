@@ -1,0 +1,151 @@
+{
+	"info": {
+		"_postman_id": "38e6e5e4-6aa0-4046-8e54-1aa4fefaa11e",
+		"name": "Books API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "8456093"
+	},
+	"item": [
+		{
+			"name": "List books",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/books?page=1&page_size=10",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"books"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "page_size",
+							"value": "10"
+						},
+						{
+							"key": "isbn",
+							"value": "9780399555886",
+							"disabled": true
+						},
+						{
+							"key": "title",
+							"value": "skyward",
+							"disabled": true
+						},
+						{
+							"key": "subtitle",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "description",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "authors",
+							"value": "Brandon Sanderson",
+							"disabled": true
+						},
+						{
+							"key": "publishers",
+							"value": "Ember",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create book",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"The Hobbit\",\n    \"subtitle\": \"\",\n    \"description\": \"The Hobbit is a tale of high adventure, undertaken by a company of dwarves in search of dragon-guarded gold. A reluctant partner in this perilous quest is Bilbo Baggins, a comfort-loving unambitious hobbit, who surprises even himself by his resourcefulness and skill as a burglar.\\r\\n\\r\\nEncounters with trolls, goblins, dwarves, elves, and giant spiders, conversations with the dragon, Smaug, and a rather unwilling presence at the Battle of Five Armies are just some of the adventures that befall Bilbo.\\r\\n\\r\\nBilbo Baggins has taken his place among the ranks of the immortals of children’s fiction. Written by Professor Tolkien for his children, The Hobbit met with instant critical acclaim when published.\",\n    \"authors\": [\n        \"J.R.R. Tolkien\"\n    ],\n    \"publishers\": [\n        \"Mariner Books\"\n    ],\n    \"isbn10\": \"054792822X\",\n    \"isbn13\": \"9780547928227\",\n    \"publishDate\": null,\n    \"numberOfPages\": 300\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseUrl}}/api/books/"
+			},
+			"response": []
+		},
+		{
+			"name": "Get book by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseUrl}}/api/books/<book-id>"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete book",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "{{baseUrl}}/api/books/<book-id>"
+			},
+			"response": []
+		},
+		{
+			"name": "Update book",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"<book-id>\",\n    \"title\": \"The Hobbit\",\n    \"subtitle\": \"\",\n    \"description\": \"The Hobbit is a tale of high adventure, undertaken by a company of dwarves in search of dragon-guarded gold. A reluctant partner in this perilous quest is Bilbo Baggins, a comfort-loving unambitious hobbit, who surprises even himself by his resourcefulness and skill as a burglar.\\r\\n\\r\\nEncounters with trolls, goblins, dwarves, elves, and giant spiders, conversations with the dragon, Smaug, and a rather unwilling presence at the Battle of Five Armies are just some of the adventures that befall Bilbo.\\r\\n\\r\\nBilbo Baggins has taken his place among the ranks of the immortals of children’s fiction. Written by Professor Tolkien for his children, The Hobbit met with instant critical acclaim when published.\",\n    \"authors\": [\n        \"J.R.R. Tolkien\"\n    ],\n    \"publishers\": [\n        \"Mariner Books\"\n    ],\n    \"isbn10\": \"054792822X\",\n    \"isbn13\": \"9780547928227\",\n    \"publishDate\": null,\n    \"numberOfPages\": 300\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseUrl}}/api/books/<book-id>"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8000",
+			"type": "string"
+		}
+	]
+}

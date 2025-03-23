@@ -10,7 +10,7 @@ redis_client = redis.Redis(
 )
 
 
-def redis_cache(cache_key_prefix: str, ttl: int = 86400):
+def redis_cache(cache_key_prefix: str, ttl: int = 7200):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):

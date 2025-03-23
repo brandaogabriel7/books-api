@@ -1,19 +1,19 @@
 up:
-	docker compose up -d
+	docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 	$(MAKE) migrate
 
-up-dev:
-	docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+up-prod:
+	docker compose up -d
 	$(MAKE) migrate
 
 down:
 	docker compose down
 
 rebuild:
-	docker compose up -d --build
-
-rebuild-dev:
 	docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+
+rebuild-prod:
+	docker compose up -d --build
 
 logs:
 	docker compose logs -f
@@ -42,10 +42,10 @@ clean:
 help:
 	@echo "Available commands:"
 	@echo "  up               - Start all services"
-	@echo "  up-dev           - Start all services in development mode"
+	@echo "  up-prod          - Start all services in production mode"
 	@echo "  down             - Stop all services"
-	@echo "  rebuild          - Rebuild and start all services"
-	@echo "  rebuild-dev      - Rebuild and start all services in development mode"
+	@echo "  rebuild          - Rebuild all services"
+	@echo "  rebuild-prod     - Rebuild all services in production mode"
 	@echo "  logs             - View logs for all services"
 	@echo "  logs-<service>   - View logs for a specific service (e.g., logs-web)"
 	@echo "  format           - Format code using Black"

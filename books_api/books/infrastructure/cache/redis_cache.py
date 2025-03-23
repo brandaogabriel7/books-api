@@ -3,7 +3,11 @@ import json
 from functools import wraps
 from datetime import timedelta
 
-redis_client = redis.Redis(host="books_redis", port=6379, db=0)
+from django.conf import settings
+
+redis_client = redis.Redis(
+    host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=0
+)
 
 
 def redis_cache(cache_key_prefix: str, ttl: int = 86400):

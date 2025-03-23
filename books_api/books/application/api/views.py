@@ -14,6 +14,7 @@ from books.application.service.book_service import BookService
 from books.infrastructure.open_library.open_library_client import (
     OpenLibraryClient,
 )
+from books.domain.entity.book import Book
 
 repository = DjangoBookRepository()
 book_service = BookService(OpenLibraryClient())
@@ -75,25 +76,7 @@ def __list_books(query):
 
     books = repository.list(page=page, page_size=page_size, filters=filters)
 
-    return Response(
-        [
-            {
-                "id": book.id,
-                "title": book.title,
-                "subtitle": book.subtitle,
-                "description": book.description,
-                "authors": book.authors,
-                "publishers": book.publishers,
-                "isbn10": book.isbn10.value if book.isbn10 else None,
-                "isbn13": book.isbn13.value if book.isbn13 else None,
-                "publishDate": (
-                    book.publishDate.value if book.publishDate else None
-                ),
-                "numberOfPages": book.numberOfPages,
-            }
-            for book in books
-        ]
-    )
+    return Response([__build_book_response(book) for book in books])
 
 
 def __create_book(data):
@@ -105,26 +88,7 @@ def __create_book(data):
 
     return Response(
         status=201,
-        data={
-            "id": created_book.id,
-            "title": created_book.title,
-            "subtitle": created_book.subtitle,
-            "description": created_book.description,
-            "authors": created_book.authors,
-            "publishers": created_book.publishers,
-            "isbn10": (
-                created_book.isbn10.value if created_book.isbn10 else None
-            ),
-            "isbn13": (
-                created_book.isbn13.value if created_book.isbn13 else None
-            ),
-            "publishDate": (
-                created_book.publishDate.value
-                if created_book.publishDate
-                else None
-            ),
-            "numberOfPages": created_book.numberOfPages,
-        },
+        data=__build_book_response(created_book),
     )
 
 
@@ -132,22 +96,7 @@ def __get_book(book_id):
     try:
         book = repository.get(book_id)
 
-        return Response(
-            {
-                "id": book.id,
-                "title": book.title,
-                "subtitle": book.subtitle,
-                "description": book.description,
-                "authors": book.authors,
-                "publishers": book.publishers,
-                "isbn10": book.isbn10.value if book.isbn10 else None,
-                "isbn13": book.isbn13.value if book.isbn13 else None,
-                "publishDate": (
-                    book.publishDate.value if book.publishDate else None
-                ),
-                "numberOfPages": book.numberOfPages,
-            }
-        )
+        return Response(__build_book_response(book))
 
     except BookModel.DoesNotExist:
         return Response(status=404)
@@ -161,28 +110,7 @@ def __update_book(book_id, data):
 
         updated_book = repository.update(str(book_id), book)
 
-        return Response(
-            {
-                "id": updated_book.id,
-                "title": updated_book.title,
-                "subtitle": updated_book.subtitle,
-                "description": updated_book.description,
-                "authors": updated_book.authors,
-                "publishers": updated_book.publishers,
-                "isbn10": (
-                    updated_book.isbn10.value if updated_book.isbn10 else None
-                ),
-                "isbn13": (
-                    updated_book.isbn13.value if updated_book.isbn13 else None
-                ),
-                "publishDate": (
-                    updated_book.publishDate.value
-                    if updated_book.publishDate
-                    else None
-                ),
-                "numberOfPages": updated_book.numberOfPages,
-            }
-        )
+        return Response(__build_book_response(updated_book))
 
     except BookModel.DoesNotExist:
         return Response(status=404)
@@ -192,28 +120,22 @@ def __delete_book(book_id):
     try:
         deleted_book = repository.delete(book_id)
 
-        return Response(
-            {
-                "id": deleted_book.id,
-                "title": deleted_book.title,
-                "subtitle": deleted_book.subtitle,
-                "description": deleted_book.description,
-                "authors": deleted_book.authors,
-                "publishers": deleted_book.publishers,
-                "isbn10": (
-                    deleted_book.isbn10.value if deleted_book.isbn10 else None
-                ),
-                "isbn13": (
-                    deleted_book.isbn13.value if deleted_book.isbn13 else None
-                ),
-                "publishDate": (
-                    deleted_book.publishDate.value
-                    if deleted_book.publishDate
-                    else None
-                ),
-                "numberOfPages": deleted_book.numberOfPages,
-            },
-        )
+        return Response(__build_book_response(deleted_book))
 
     except BookModel.DoesNotExist:
         return Response(status=404)
+
+
+def __build_book_response(book: Book):
+    return {
+        "id": book.id,
+        "title": book.title,
+        "subtitle": book.subtitle,
+        "description": book.description,
+        "authors": book.authors,
+        "publishers": book.publishers,
+        "isbn10": (book.isbn10.value if book.isbn10 else None),
+        "isbn13": (book.isbn13.value if book.isbn13 else None),
+        "publishDate": (book.publishDate.value if book.publishDate else None),
+        "numberOfPages": book.numberOfPages,
+    }

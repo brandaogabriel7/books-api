@@ -1,6 +1,30 @@
 [
   {
-    "id": "e9f8ce4d-360b-4bee-9e4b-fde85b6b9dd6",
+    "id": "19613d36-b262-4c22-923e-2a3a5a123a5b",
+    "title": "Building a Second Brain",
+    "subtitle": "A Proven Method to Organize Your Digital Life and Unlock Your Creative Potential",
+    "description": "For the first time in history, we have instantaneous access to the world’s knowledge. There has never been a better time to learn, to contribute, and to improve ourselves. Yet, rather than feeling empowered, we are often left feeling overwhelmed by this constant influx of information. The very knowledge that was supposed to set us free has instead led to the paralyzing stress of believing we’ll never know or remember enough.\r\n\r\nNow, this eye-opening and accessible guide shows how you can easily create your own personal system for knowledge management, otherwise known as a Second Brain. As a trusted and organized digital repository of your most valued ideas, notes, and creative work synced across all your devices and platforms, a Second Brain gives you the confidence to tackle your most important projects and ambitious goals.\r\n\r\nDiscover the full potential of your ideas and translate what you know into more powerful, more meaningful improvements in your work and life by Building a Second Brain.",
+    "authors": ["Tiago Forte"],
+    "publishers": ["Atria Books"],
+    "isbn10": "1982167386",
+    "isbn13": "9781982167387",
+    "publishDate": null,
+    "numberOfPages": 240
+  },
+  {
+    "id": "fd94160f-897c-4d35-a93a-dda515a79655",
+    "title": "Crooked Kingdom",
+    "subtitle": "",
+    "description": "Preceeded by [Six of Crows](https://openlibrary.org/works/OL17332479W/Six_of_Crows)\r\n\r\nBOOK TWO of the [Six of Crows Duology](https://openlibrary.org/works/OL19758128W/Six_of_Crows_Crooked_Kingdom)\r\n\r\nCrooked Kingdom is a fantasy novel by American author Leigh Bardugo, published by Henry Holt and Co. in 2016. Set in a world loosely inspired by 19th-century Europe, it takes place days after the events of the duology's first book, [Six of Crows](https://openlibrary.org/works/OL17332479W/Six_of_Crows). The plot is told from the third-person viewpoints of six characters.",
+    "authors": ["Leigh Bardugo"],
+    "publishers": ["Square Fish"],
+    "isbn10": "1250076978",
+    "isbn13": "9781250076977",
+    "publishDate": null,
+    "numberOfPages": 564
+  },
+  {
+    "id": "4cfd7163-ccd6-48e2-ab68-8f8e1e7568a8",
     "title": "Cytonic",
     "subtitle": "",
     "description": null,
@@ -12,7 +36,7 @@
     "numberOfPages": null
   },
   {
-    "id": "9cfe375b-5175-4937-b79a-07050bf13b1c",
+    "id": "ed585db5-5003-47df-966f-4982819a072d",
     "title": "Defiant",
     "subtitle": "",
     "description": "",
@@ -24,7 +48,134 @@
     "numberOfPages": null
   },
   {
-    "id": "bcb49ad0-ec92-416f-b542-9d468e49a415",
+    "id": "e6a35320-48a9-4064-85b7-d09170df6e98",
+    "title": "Domain-Driven Design Distilled",
+    "subtitle": "",
+    "description": "",
+    "authors": ["Vaughn Vernon"],
+    "publishers": ["Addison-Wesley Professional"],
+    "isbn10": "0134434420",
+    "isbn13": "9780134434421",
+    "publishDate": null,
+    "numberOfPages": 176
+  },
+  {
+    "id": "53b02564-e9d3-40b1-ade5-137a80368e61",
+    "title": "Elantris",
+    "subtitle": "",
+    "description": null,
+    "authors": ["Brandon Sanderson"],
+    "publishers": ["Tor"],
+    "isbn10": "0765381028",
+    "isbn13": "9780765381026",
+    "publishDate": null,
+    "numberOfPages": 592
+  },
+  {
+    "id": "2c29ba6a-7771-4b05-aff5-ca67109829ff",
+    "title": "Getting Things Done",
+    "subtitle": "The Art of Stress-Free Productivity",
+    "description": null,
+    "authors": ["David Allen"],
+    "publishers": ["Penguin Books"],
+    "isbn10": "0143126563",
+    "isbn13": "9780143126560",
+    "publishDate": null,
+    "numberOfPages": 352
+  },
+  {
+    "id": "ea93760e-82a0-49b7-b488-b7ac5b6523db",
+    "title": "Head First Design Patterns",
+    "subtitle": "Building Extensible and Maintainable Object-Oriented Software",
+    "description": "",
+    "authors": [
+      "Eric Freeman",
+      "Elisabeth Freeman",
+      "Kathy Sierra",
+      "Bert Bates",
+      "Elisabeth Robson",
+      "Fu li man"
+    ],
+    "publishers": ["O'Reilly Media, Incorporated", "O'Reilly Media"],
+    "isbn10": null,
+    "isbn13": "9781492078005",
+    "publishDate": null,
+    "numberOfPages": 694
+  },
+  {
+    "id": "20ce5bbf-f34e-49ee-9951-0163f0f7a255",
+    "title": "Learning Domain-Driven Design",
+    "subtitle": "Aligning Software Architecture and Business Strategy",
+    "description": "",
+    "authors": ["Vladik Khononov"],
+    "publishers": ["O'Reilly Media, Incorporated"],
+    "isbn10": "1098100131",
+    "isbn13": "9781098100131",
+    "publishDate": null,
+    "numberOfPages": 180
+  },
+  {
+    "id": "fb08b928-83d5-48b3-8847-9bb0e29a4ba1",
+    "title": "Não verás país nenhum",
+    "subtitle": "memorial descritivo",
+    "description": "",
+    "authors": ["Ignácio de Loyola Brandão"],
+    "publishers": ["Codecri"],
+    "isbn10": "852600199X",
+    "isbn13": "9788526001992",
+    "publishDate": null,
+    "numberOfPages": 356
+  },
+  {
+    "id": "583c409e-5675-4c90-89cb-9c3e4ec863e8",
+    "title": "Percy Jackson and the Olympians, Book Two the Sea of Monsters",
+    "subtitle": "",
+    "description": null,
+    "authors": ["Rick Riordan"],
+    "publishers": ["Hyperion Books for Children", "Disney-Hyperion"],
+    "isbn10": null,
+    "isbn13": "9781368051491",
+    "publishDate": null,
+    "numberOfPages": null
+  },
+  {
+    "id": "0e3d35a2-649c-4ce8-a80d-7af8903a5e22",
+    "title": "Percy Jackson and the Olympians the Lightning Thief Deluxe Collector's Edition",
+    "subtitle": "",
+    "description": "",
+    "authors": ["Rick Riordan"],
+    "publishers": ["Disney Publishing Worldwide"],
+    "isbn10": null,
+    "isbn13": "9781368101028",
+    "publishDate": null,
+    "numberOfPages": null
+  },
+  {
+    "id": "3660a1e7-6e20-4a46-911e-29df3e7b50cf",
+    "title": "Refactoring",
+    "subtitle": "Improving the Design of Existing Code",
+    "description": "2nd edition",
+    "authors": ["Martin Fowler"],
+    "publishers": ["Addision-Wesley"],
+    "isbn10": null,
+    "isbn13": "9780134757599",
+    "publishDate": null,
+    "numberOfPages": 448
+  },
+  {
+    "id": "241809e1-0919-4f85-b5b2-b23e891a1339",
+    "title": "Six of Crows",
+    "subtitle": "",
+    "description": "BOOK ONE of the [Six of Crows Duology](https://openlibrary.org/works/OL19758128W/Six_of_Crows_Crooked_Kingdom)\r\n\r\nSix of Crows is a fantasy novel written by the Israeli-American author Leigh Bardugo published by Henry Holt and Co. in 2015. The story follows a thieving crew and is primarily set in the city of Ketterdam, loosely inspired by Dutch Republic–era Amsterdam. The plot is told from third-person viewpoints of seven different characters.\r\n\r\nThe novel is followed by [Crooked Kingdom](https://openlibrary.org/works/OL17597665W) (2016) and is part of the Grishaverse. \r\n\r\nFollowed by: [Crooked Kingdom][2]\r\n\r\n\r\n  [2]: https://openlibrary.org/works/OL17597665W/Crooked_Kingdom",
+    "authors": ["Leigh Bardugo"],
+    "publishers": ["Square Fish"],
+    "isbn10": "125007696X",
+    "isbn13": "9781250076960",
+    "publishDate": null,
+    "numberOfPages": 496
+  },
+  {
+    "id": "7f287516-d671-4191-95e1-4195ecf641f0",
     "title": "Skyward",
     "subtitle": "",
     "description": null,
@@ -36,7 +187,7 @@
     "numberOfPages": 513
   },
   {
-    "id": "79a40c63-5456-4c1f-8303-e2260b3fe9e1",
+    "id": "7222ffc1-27e3-47dd-88b3-6994d36c6bdd",
     "title": "Starsight",
     "subtitle": "",
     "description": null,
@@ -46,5 +197,41 @@
     "isbn13": "9780399555848",
     "publishDate": null,
     "numberOfPages": 480
+  },
+  {
+    "id": "98cb68e3-fa85-436c-a888-90e9090078eb",
+    "title": "The Hobbit",
+    "subtitle": null,
+    "description": null,
+    "authors": [],
+    "publishers": [],
+    "isbn10": null,
+    "isbn13": "9787111423867",
+    "publishDate": null,
+    "numberOfPages": null
+  },
+  {
+    "id": "02cec02f-359d-4745-bb5b-22e8d8369748",
+    "title": "The Lightning Thief",
+    "subtitle": "",
+    "description": "Twelve-year-old Percy Jackson is on the most dangerous quest of his life.  With the help of a satyr and a daughter of Athena, Percy must journey across the United States to catch a thief who has stolen the original weapon of mass destruction—Zeus’ master bolt.  Along the way, he must face a host of mythological enemies determined to stop him.  Most of all, he must come to terms with a father he has never known, and an Oracle that has warned him of betrayal by a friend.",
+    "authors": ["Rick Riordan"],
+    "publishers": ["Disney-Hyperion Books"],
+    "isbn10": "0786838655",
+    "isbn13": null,
+    "publishDate": null,
+    "numberOfPages": 416
+  },
+  {
+    "id": "7e3b6391-096a-40f5-9c29-46e07ac9ff35",
+    "title": "The Lord of the Rings Deluxe Edition",
+    "subtitle": "",
+    "description": "Originally published from 1954 through 1956, J.R.R. Tolkien's richly complex series ushered in a new age of epic adventure storytelling. A philologist and illustrator who took inspiration from his work, Tolkien invented the modern heroic quest novel from the ground up, creating not just a world, but a domain, not just a lexicon, but a language, that would spawn countless imitators and lead to the inception of the epic fantasy genre. Today, THE LORD OF THE RINGS is considered \"the most influential fantasy novel ever written.\" (THE ENCYCLOPEDIA OF FANTASY)\r\n\r\nDuring his travels across Middle-earth, the hobbit Bilbo Baggins had found the Ring. But the simple band of gold was far from ordinary; it was in fact the One Ring - the greatest of the ancient Rings of Power. Sauron, the Dark Lord, had infused it with his own evil magic, and when it was lost, he was forced to flee into hiding.\r\n\r\nBut now Sauron's exile has ended and his power is spreading anew, fueled by the knowledge that his treasure has been found. He has gathered all the Great Rings to him, and will stop at nothing to reclaim the One that will complete his dominion. The only way to stop him is to cast the Ruling Ring deep into the Fire-Mountain at the heart of the land of Mordor--Sauron's dark realm.\r\n\r\nFate has placed the burden in the hands of Frodo Baggins, Bilbo's heir...and he is resolved to bear it to its end. Or his own. \r\n\r\n\r\n----------\r\n\r\n\r\n**Contains**\r\n\r\n - [The Fellowship of the Ring][1]\r\n - [The Two Towers][2]\r\n - [The Return of the King][3]\r\n - [The Lord of the Rings [2/2]](https://openlibrary.org/works/OL27306128W)\r\n - [The Lord of the Rings [1/6]](https://openlibrary.org/works/OL24170898W)\r\n - [The Lord of the Rings [1/9]](https://openlibrary.org/works/OL27305953W)\r\n - [The Lord of the Rings [2/9]](https://openlibrary.org/works/OL27305892W)\r\n - [The Lord of the Rings [3/9]](https://openlibrary.org/works/OL27306048W)\r\n\r\n\r\n\r\n  [1]: https://openlibrary.org/works/OL14933414W/The_Fellowship_of_the_Ring\r\n  [2]: https://openlibrary.org/works/OL27479W/The_Two_Towers\r\n  [3]: https://openlibrary.org/works/OL27516W/The_Return_of_the_King",
+    "authors": ["J.R.R. Tolkien"],
+    "publishers": ["Houghton Mifflin Harcourt"],
+    "isbn10": "0544273443",
+    "isbn13": "9780544273443",
+    "publishDate": null,
+    "numberOfPages": 1216
   }
 ]

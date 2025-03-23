@@ -73,7 +73,7 @@ Whenever you create or update a book, the app will try to fetch its information 
 
 I used Redis to cache the book information fetched from the Open Library API. The cache layer is used to avoid too many requests to the 3rd party API, which could lead to rate limiting.
 
-Since book information doesn't change frequently, I set the cache expiration time to 1 day.
+The cache is set to expire after 2 hours. The book data is not information that I need updates in real time so I don't need the TTL to be lower than that. On the other hand, I might cache books that are not frequently accessed for a long time, so I don't want the TTL to be too high, either.
 
 ## Tests
 

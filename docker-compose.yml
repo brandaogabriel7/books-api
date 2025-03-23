@@ -7,6 +7,8 @@ services:
       context: books_api
       dockerfile: Dockerfile
     entrypoint: dockerize -wait tcp://books_db:5432 -wait tcp://books_redis:6379 -timeout 40s ./.docker/entrypoint.sh
+    env_file:
+      - .env.production
     ports:
       - '8000:8000'
     depends_on:

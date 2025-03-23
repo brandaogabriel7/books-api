@@ -41,6 +41,8 @@ ENV PYTHONUNBUFFERED=1
 
 USER appuser
 
+RUN python manage.py collectstatic --noinput
+
 RUN chmod +x /app/.docker/entrypoint.sh
 
 EXPOSE 8000
